@@ -37,7 +37,7 @@ class ModifyMemberController extends CommonController {
                 $this->ajaxReturn($data);
 //                $this->error($M_member->getError());
                 return;
-            }else {
+            }else{
                 $where['member_id'] = $id;
                 $r = $M_member->where($where)->save();
                 if($r){
@@ -111,18 +111,22 @@ class ModifyMemberController extends CommonController {
             $data['info'] = "参数错误";
             $this->ajaxReturn($data);
         }
-        if(!preg_match("/^1[34578]{1}\d{9}$/",$phone)){  
+        if(!preg_match("/^1[34578]{1}\d{9}$/",$phone)){
             $data['status']=-1;
             $data['info'] = "手机号码不正确";
             $this->ajaxReturn($data);
-        }  
+        }
         $user_phone=M("Member")->field('phone')->where("phone='$phone'")->find();
         if (!empty($user_phone)){
             $data['status']=-2;
             $data['info'] = "手机号码已经存在";
             $this->ajaxReturn($data);
         }
-        $r = sandPhone($phone,$this->config['CODE_NAME'],$this->config['CODE_USER_NAME'],$this->config['CODE_USER_PASS']);
+        $r = sandPhone(
+          $phone,$this->config['CODE_NAME'],
+          $this->config['CODE_USER_NAME'],
+          $this->config['CODE_USER_PASS']
+        );
         if($r!="短信发送成功"){
             $data['status']=0;
             $data['info'] = $r;

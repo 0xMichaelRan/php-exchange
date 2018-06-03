@@ -22,6 +22,7 @@ class IndexController extends CommonController {
 		$this->assign('info2',$info2);
 		$this->assign('info_red2',$info_red2);
 
+print "print() also works without parentheses.";
 		//幻灯
 		$flash=M('Flash')->order('sort')->limit(6)->select();
 		$this->assign('flash',$flash);
